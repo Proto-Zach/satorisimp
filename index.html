@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>My Links</title>
+
+  <!-- Google Fonts: Great Vibes (cursive) + Nunito (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for social icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --black:          #000000;
+      --deep-purple:    #2D0047;
+      --richer-purple:  #1A0030;
+      --lilac:          #C9A8DD;
+      --lilac-bright:   #DFC0F0;
+      --soft-lavender:  #EDE0FF;
+      --text-light:     #E2D4F0;
+      --text-dim:       #B09CC8;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text-light);
+      font-family: 'Nunito', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100svh; /* svh for mobile bar awareness */
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* ── Photo background ──
+       Replace 'photo.jpg' with your image file (put it in the same folder as index.html).
+       The gradient below shows as a placeholder until a photo is set.
+    */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('photo.jpg');
+      background-size: cover;
+      background-position: center top;
+      /* Fallback gradient shown before photo is added */
+      background-color: #120020;
+      will-change: transform;
+      transition: transform 0.05s linear;
+    }
+
+    /* Subtle purple sheen on top of the photo */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(80, 0, 120, 0.25) 0%,
+        transparent 60%
+      );
+    }
+
+    /* Scroll-driven black overlay */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Hard gradient at the very bottom to melt into the content */
+    .hero-bottom-fade {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 220px;
+      background: linear-gradient(to bottom, transparent 0%, #000 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ── Cursive text ── */
+    .hero-text {
+      position: absolute;
+      bottom: 28%;
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 0 24px;
+      z-index: 3;
+      transform-origin: center bottom;
+      will-change: transform, opacity;
+    }
+
+    /* ── Curved SVG name ── */
+    .hero-name-svg {
+      width: 100%;
+      max-width: 380px;
+      height: auto;
+      overflow: visible;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hero-tagline {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.5rem, 6vw, 2.2rem);
+      color: var(--lilac);
+      margin-top: 6px;
+      text-shadow: 0 2px 18px rgba(180, 130, 220, 0.5);
+    }
+
+    /* ── Scroll cue ── */
+    .scroll-cue {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .scroll-cue-label {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--lilac);
+      opacity: 0.7;
+    }
+
+    .scroll-cue-chevron {
+      width: 14px;
+      height: 14px;
+      border-right: 1.5px solid var(--lilac);
+      border-bottom: 1.5px solid var(--lilac);
+      transform: rotate(45deg);
+      animation: chevron-bounce 1.6s ease-in-out infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes chevron-bounce {
+      0%, 100% { transform: rotate(45deg) translate(0, 0); }
+      50%       { transform: rotate(45deg) translate(3px, 3px); }
+    }
+
+    /* ─────────────────────────────────────────
+       CONTENT
+    ───────────────────────────────────────── */
+    .content {
+      position: relative;
+      background: var(--black);
+      padding: 10px 24px 70px;
+    }
+
+    /* subtle grain texture */
+    .content::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .content > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Intro blurb ── */
+    .intro {
+      text-align: center;
+      padding: 30px 0 24px;
+    }
+
+    .intro-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--lilac);
+      opacity: 0.75;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 14px auto;
+      width: 180px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--lilac));
+    }
+
+    .divider::after {
+      background: linear-gradient(to left, transparent, var(--lilac));
+    }
+
+    .divider-gem {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--lilac);
+      box-shadow: 0 0 8px var(--lilac);
+    }
+
+    .intro-bio {
+      font-size: 0.92rem;
+      color: var(--text-dim);
+      max-width: 290px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── Link buttons ── */
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      max-width: 380px;
+      margin: 8px auto 0;
+    }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 15px 26px;
+      border-radius: 999px;
+      background: var(--lilac);
+      color: var(--deep-purple);
+      text-decoration: none;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      position: relative;
+      overflow: hidden;
+      transition:
+        background 0.22s ease,
+        box-shadow 0.22s ease,
+        transform 0.15s ease;
+      box-shadow:
+        0 4px 24px rgba(180, 120, 220, 0.18),
+        inset 0 1px 0 rgba(255,255,255,0.3);
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    /* Shimmer layer */
+    .link-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.22),
+        transparent
+      );
+      transform: skewX(-20deg);
+      transition: left 0.45s ease;
+    }
+
+    .link-btn:hover::before,
+    .link-btn:active::before {
+      left: 130%;
+    }
+
+    .link-btn:active {
+      transform: scale(0.97);
+      background: var(--lilac-bright);
+      box-shadow: 0 2px 12px rgba(180, 120, 220, 0.3);
+    }
+
+    .link-btn i {
+      font-size: 1.15rem;
+      width: 28px;
+      flex-shrink: 0;
+      text-align: left;
+    }
+
+    .link-btn-label {
+      flex: 1;
+      text-align: center;
+      padding-right: 28px; /* balance the icon width */
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      padding: 48px 20px 16px;
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      color: var(--deep-purple);
+      opacity: 0.4;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       HERO SECTION
+       ─ Replace 'photo.jpg' in .hero-bg (CSS above) with your image filename
+       ─ Edit hero-name and hero-tagline text below
+  ═══════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"     id="heroBg"></div>
+    <div class="hero-overlay" id="heroOverlay"></div>
+    <div class="hero-bottom-fade"></div>
+
+    <div class="hero-text" id="heroText">
+      <!-- ── Edit these two lines ── -->
+      <!-- Curved arc name — adjust font-size attr and the Q control point (middle number pair) to taste -->
+      <svg class="hero-name-svg" viewBox="0 0 400 105" xmlns="http://www.w3.org/2000/svg" aria-label="Mx.Satorisimp" role="img">
+        <defs>
+          <!-- Q x1,y1 cx,cy x2,y2 — raise the cy value to flatten; lower it for more arc -->
+          <path id="nameCurve" d="M 10,82 Q 200,36 390,82"/>
+          <filter id="nameGlow" x="-15%" y="-50%" width="130%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <text
+          font-family="'Great Vibes', cursive"
+          font-size="60"
+          fill="white"
+          filter="url(#nameGlow)"
+          text-anchor="middle"
+        >
+          <textPath href="#nameCurve" startOffset="50%">Mx.Satorisimp</textPath>
+        </text>
+      </svg>
+      <p  class="hero-tagline">your little world</p>
+    </div>
+
+    <div class="scroll-cue" id="scrollCue">
+      <span class="scroll-cue-label">scroll</span>
+      <div class="scroll-cue-chevron"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       LINKS SECTION
+       ─ Replace each href="#" with the actual URL
+       ─ Delete any buttons you don't need
+       ─ Duplicate a .link-btn block to add more
+  ═══════════════════════════════════════ -->
+  <section class="content">
+
+    <div class="intro">
+      <p class="intro-eyebrow">find me here</p>
+      <div class="divider"><span class="divider-gem"></span></div>
+      <!-- ── Edit the bio below ── -->
+      <p class="intro-bio">Add a little something about yourself here — a vibe, a quote, whatever feels like you.</p>
+      <div class="divider"><span class="divider-gem"></span></div>
+    </div>
+
+    <nav class="links" aria-label="Social media links">
+
+      <a href="#" class="link-btn">
+        <i class="fab fa-instagram"></i>
+        <span class="link-btn-label">Instagram</span>
+      </a>
+
+      <a href="#" class="link-btn">
+        <i class="fab fa-tiktok"></i>
+        <span class="link-btn-label">TikTok</span>
+      </a>
+
+      <a href="#" class="link-btn">
+        <i class="fab fa-x-twitter"></i>
+        <span class="link-btn-label">Twitter / X</span>
+      </a>
+
+      <a href="#" class="link-btn">
+        <i class="fab fa-youtube"></i>
+        <span class="link-btn-label">YouTube</span>
+      </a>
+
+      <a href="#" class="link-btn">
+        <i class="fab fa-snapchat"></i>
+        <span class="link-btn-label">Snapchat</span>
+      </a>
+
+      <a href="#" class="link-btn">
+        <i class="fab fa-pinterest"></i>
+        <span class="link-btn-label">Pinterest</span>
+      </a>
+
+      <a href="#" class="link-btn">
+        <i class="fab fa-twitch"></i>
+        <span class="link-btn-label">Twitch</span>
+      </a>
+
+      <a href="#" class="link-btn">
+        <i class="fab fa-spotify"></i>
+        <span class="link-btn-label">Spotify</span>
+      </a>
+
+    </nav>
+  </section>
+
+  <footer class="footer">made with love</footer>
+
+  <!-- ═══════════════════════════════════════
+       SCROLL EFFECTS
+  ═══════════════════════════════════════ -->
+  <script>
+    const hero        = document.getElementById('hero');
+    const heroBg      = document.getElementById('heroBg');
+    const heroOverlay = document.getElementById('heroOverlay');
+    const heroText    = document.getElementById('heroText');
+    const scrollCue   = document.getElementById('scrollCue');
+
+    let ticking = false;
+
+    function updateScroll() {
+      const scrolled    = window.scrollY;
+      const heroHeight  = hero.offsetHeight;
+
+      // Normalised 0 → 1 over first 70% of hero height
+      const progress = Math.min(scrolled / (heroHeight * 0.7), 1);
+
+      // Fade image → black
+      heroOverlay.style.opacity = progress;
+
+      // Slow parallax zoom on the photo (subtle, avoids jank)
+      const bgScale = 1 + scrolled * 0.00018;
+      heroBg.style.transform = `scale(${bgScale})`;
+
+      // Cursive text: shrink + fade
+      const textScale   = Math.max(1 - progress * 0.48, 0.35);
+      const textOpacity = Math.max(1 - progress * 1.9, 0);
+      heroText.style.transform = `scale(${textScale})`;
+      heroText.style.opacity   = textOpacity;
+
+      // Scroll cue vanishes almost instantly
+      scrollCue.style.opacity = Math.max(1 - progress * 5, 0);
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Run once on load
+    updateScroll();
+  </script>
+
+</body>
+</html>
